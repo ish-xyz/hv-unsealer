@@ -103,7 +103,7 @@ def tests():
     use the docker container on ..backend/
     """
 
-    test = Backend('http://test:8500', 'v1/kv/backend.py.testing', 'very-secret-token')
+    test = Backend('http://cube:8500', 'v1/kv/backend.py.testing', 'very-secret-token')
     print('Testing the _put() method:')
     print(test._put('object', {'key':'value'}))
     print('[X] SUCCESS\n---------\n')

@@ -5,8 +5,7 @@ import json
 
 class executor():
     """ Module used to retrive the 
-        token and unsueal the vault endpoint.
-        This class will also initialize the cluster if it's needed.
+        token and init&unseal the vault endpoint.
     """
     def __init__(self, endpoint, key, storage):
         """
@@ -33,3 +32,8 @@ class executor():
         Method used only to unsueal the vault server.
         """
         pass
+
+    def store(self, data):
+        """
+        "data" should be a list. 
+        """
