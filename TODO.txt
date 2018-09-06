@@ -1,0 +1,11 @@
+- consul Dockerfile build and run.
+- unsealing action.
+- configuration loader.
+- backend api serialization
+- service checker through consul
+- auto-unsealing trigger
+- docs
+    usage
+    integration
+    code layout
+- Versions improvement
