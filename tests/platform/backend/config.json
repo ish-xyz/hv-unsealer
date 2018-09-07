@@ -1,0 +1,16 @@
+{
+    "node_name": "backend-dev",
+    "datacenter": "backend-dev-dc",
+    "bind_addr": "0.0.0.0",
+    "server": true,
+    "bootstrap_expect": 1,
+    "ui": true,
+    "addresses": {
+		"http": "0.0.0.0"
+	},
+    "data_dir": "/var/consul",
+    "encrypt": "EXz7LFN8hpQ4id8EDYiFoQ==",
+    "rejoin_after_leave": true,
+    "enable_syslog": false,
+    "enable_debug": false
+}

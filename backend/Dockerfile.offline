@@ -1,9 +1,0 @@
-FROM alpine:latest
-
-COPY config.json /tmp/consul/config.json
-COPY acl.json /tmp/consul/acl.json
-COPY consul /usr/bin/consul
-
-CMD ["consul",  "agent",  "-config-dir=/tmp/consul"]
-
-#docker run -td -p {host_port}:{container_port} --name backend-dev ube
