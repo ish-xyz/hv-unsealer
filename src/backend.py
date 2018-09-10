@@ -58,28 +58,6 @@ class Backend(common.Common):
         return super(Backend, self)._delete(self._std_headers(), item)
 
 
-
-def tests():
-    """
-    Simple testing method.
-    To bring up the testing environment \
-    use the docker container on ..backend/
-    """
-
-    test = Backend('http://cube:8500', 'v1/kv/backend.py.testing', 'very-secret-token')
-    print('Testing the _put() method:')
-    print(test._put('object', {'key':'value'}))
-    print('[X] SUCCESS\n---------\n')
-
-    print('Testing the _get() method:')
-    print(test._get('object'))
-    print('[X] SUCCESS\n---------\n')
-
-    print('Testing the _delete() method:')
-    print(test._delete('object'))
-    print('[X] SUCCESS\n---------\n')
-
-    print('Backend testing finished with success.')
-
 if __name__ == '__main__':
-    tests()
+    print("Import only.")
+    pass
