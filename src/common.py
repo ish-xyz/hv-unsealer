@@ -4,13 +4,18 @@
 
 import re
 import sys
+import json
+import base64
+import requests as rq
 import logging as log
 
-class Common():
+class Common(object):
     """
     Class used to wrap all the common methods
     """
-    
+    def __init__(self):
+        pass
+
     def _valid_url(self, host):
 
         """
@@ -30,6 +35,7 @@ class Common():
             return False
         else: 
             return True
+
 
     def log(self, message, level):
         """
@@ -53,5 +59,62 @@ class Common():
 
         date = '00-00-00'
         stm = "{}: {} - {}".format(date, message, lvs[level])
-        print(stm)
+
         return True
+
+    def _std_headers(self):
+        """
+        Standard http headers for consul
+        """
+        return {
+            'User-Agent': 'Vault Auto-Unsealing/0.0.1',
+        }
+
+    def _put(self, headers, item, data):
+        """
+        Method to put info from the consul backend.
+        """
+
+        # Compose url to call
+        url = "{}/{}/{}".format(
+            self.host, 
+            self.path,
+            item
+        )
+
+        resp = rq.put(url, headers=headers, data=str(data))
+        return resp.content
+    
+    def _get(self, headers, item):
+        """
+        Method to get info from the consul backend.
+        """
+
+        # Compose url to call
+        url = "{}/{}/{}".format(
+            self.host, 
+            self.path,
+            item
+        )
+
+        resp = rq.get(url, headers=headers)
+        data = json.loads(resp.content)
+        value = base64.b64decode(data[0]['Value'])
+
+        return value
+
+    
+    def _delete(self, headers, item):
+        """
+        Method to delete from the consul backend.
+        """
+
+        # Compose url to call
+        url = "{}/{}/{}".format(
+            self.host, 
+            self.path,
+            item
+        )
+
+        resp = rq.delete(url, headers=headers)
+        return resp.content

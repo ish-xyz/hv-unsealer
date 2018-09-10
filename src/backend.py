@@ -4,14 +4,11 @@
 ### Author: Isham J. Araia @ None
 ### Date: 20 - 08 - 2018
 
-import requests as rq
-import json
 import sys
-import base64
 import common
 
 
-class Backend():
+class Backend(common.Common):
     """
     This class is intended to handle 
         the backend connections and transactions.
@@ -22,18 +19,14 @@ class Backend():
         Constructor method
         """
 
-        ##Load common methods class
-        self.base = common.Common()
-
-        if not self.base._valid_url(host):
-            self.base.log('Not a valid URL', 4)
+        if not self._valid_url(host):
+            self.log('Not a valid URL', 4)
             sys.exit(1)
 
         self.host = host
         self.token = token
         self.path = path
         
-
     def _std_headers(self):
         """
         Standard http headers for consul
@@ -48,52 +41,22 @@ class Backend():
         """
         Method to put info from the consul backend.
         """
-
-        # Compose url to call
-        url = "{}/{}/{}".format(
-            self.host, 
-            self.path,
-            item
-        )
-
-        resp = rq.put(url, headers=self._std_headers(), data=str(data))
-
-        return resp.content
+        return super(Backend, self)._put(self._std_headers(), item, data)
     
+
     def _get(self, item):
         """
         Method to get info from the consul backend.
         """
-
-        # Compose url to call
-        url = "{}/{}/{}".format(
-            self.host, 
-            self.path,
-            item
-        )
-
-        resp = rq.get(url, headers=self._std_headers())
-        data = json.loads(resp.content)
-        value = base64.b64decode(data[0]['Value'])
-
-        return value
+        return super(Backend, self)._get(self._std_headers(), item)
 
     
     def _delete(self, item):
         """
         Method to delete from the consul backend.
         """
+        return super(Backend, self)._delete(self._std_headers(), item)
 
-        # Compose url to call
-        url = "{}/{}/{}".format(
-            self.host, 
-            self.path,
-            item
-        )
-
-        resp = rq.delete(url, headers=self._std_headers())
-
-        return resp.content
 
 
 def tests():

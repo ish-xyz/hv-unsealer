@@ -1,13 +1,16 @@
 #!/bin/env python3
 
-import requests
+import requests as rq
 import json
+import sys
+import base64
+import common
 
-class executor():
+class Vault(common.Common):
     """ Module used to retrive the 
         token and init&unseal the vault endpoint.
     """
-    def __init__(self, endpoint, key, storage):
+    def __init__(self, endpoint, key, storage_type):
         """
         Class constructor
         Inputs:
@@ -18,7 +21,18 @@ class executor():
         """
         self.endpoint = endpoint
         self.key = key
-        self.storage = storage
+    
+    def _get(self):
+        pass
+
+    def _put(self):
+        pass
+
+    def _post(self):
+        pass
+
+    def _del(self):
+        pass
 
     def init(self):
         """
@@ -32,8 +46,3 @@ class executor():
         Method used only to unsueal the vault server.
         """
         pass
-
-    def store(self, data):
-        """
-        "data" should be a list. 
-        """
