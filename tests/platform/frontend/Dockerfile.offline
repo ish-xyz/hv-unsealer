@@ -1,7 +1,8 @@
 FROM centos:7
-RUN yum install nano epel-release -y && \
-	yum install python2-pip -y
 
 COPY vault /usr/bin/vault
-COPY vault.hcl /tmp/vault.hcl
-CMD ["vault", "server", "-config=/tmp/vault.hcl"]
+COPY vault.hcl /etc/vault.hcl
+RUN yum install nano epel-release -y && \
+	yum install python2-pip nano -y
+
+CMD ["vault", "server", "-config=/etc/vault.hcl"]

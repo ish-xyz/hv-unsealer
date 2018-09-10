@@ -1,8 +1,15 @@
+##
+## Python 2.7.X -> 3.0.X
+### Backend testing suite
+### Author: Isham J. Araia @ None
+### Date: 20 - 08 - 2018
+
 import loader
+import tests_common
 import unittest
 import backend
 
-class BackendGet(unittest.TestCase):
+class TestBackendGet(unittest.TestCase):
 
     def setUp(self):
         self.be_test = backend.Backend('http://cube:8500', 'v1/kv/backend.py.testing', 'very-secret-token')
