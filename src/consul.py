@@ -5,11 +5,11 @@
 ### Date: 20 - 08 - 2018
 
 import sys
-import common
+import base
 import json
 import base64
 
-class Consul(common.Common):
+class Consul(base.Base):
     """
     This class is intended to handle 
         the backend connections and transactions.

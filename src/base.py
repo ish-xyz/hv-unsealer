@@ -7,7 +7,7 @@ import sys
 import requests as rq
 import logging as log
 
-class Common(object):
+class Base(object):
     """
     Class used to wrap all the common methods
     """
