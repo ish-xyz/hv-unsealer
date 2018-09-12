@@ -15,7 +15,7 @@ class TestConsul(unittest.TestCase):
         """
         Setup the environment to test methods
         """
-        config = baseTests.BaseTests('consulTests.yml').CONFIG['consul']
+        config = baseTests.BaseTests('config.yml').CONFIG['consulTests']
         self.get_test = consul.Consul(config['address'], config['path'], config['acl-token'])
         self.put_test = consul.Consul(config['address'], config['path'], config['acl-token'])
         self.del_test = consul.Consul(config['address'], config['path'], config['acl-token'])
