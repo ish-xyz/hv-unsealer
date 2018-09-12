@@ -39,6 +39,9 @@ class Vault(common.Common):
         Method used to initialize the Hashicorp vault setup.
         The function will just initialize the cluster only if it is needed.
         """
+        # Check init status
+        # IF not initialized and you're the master 
+        # THEN init the cluster
         pass
 
     def unseal(self, unsueal_keys=[], minkey=3) :

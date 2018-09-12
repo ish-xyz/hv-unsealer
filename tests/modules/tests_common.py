@@ -9,6 +9,7 @@ class Setup():
     def __init__():
         """
         Platform setup
+        Ansible interface or Make interface
         """
         pass
 
@@ -17,5 +18,6 @@ class Teardown():
     def __init__():
         """
         Platform Teardown
+        Ansible interface or Make interface
         """
         pass

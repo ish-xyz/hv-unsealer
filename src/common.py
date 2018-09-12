@@ -4,8 +4,6 @@
 
 import re
 import sys
-import json
-import base64
 import requests as rq
 import logging as log
 
@@ -26,7 +24,7 @@ class Common(object):
             r'^(?:http|ftp)s?://' # http:// or https://
             r'(?:(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+(?:[A-Z]{2,6}\.?|[A-Z0-9-]{2,}\.?)|' #domain...
             r'localhost|' #localhost...
-            r'cube|' #test...
+            r'consulmod|' #test...
             r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})' # ...or ip
             r'(?::\d+)?' # optional port
             r'(?:/?|[/?]\S+)$', re.IGNORECASE)
@@ -81,7 +79,6 @@ class Common(object):
             self.path,
             item
         )
-
         resp = rq.put(url, headers=headers, data=str(data))
         return resp.content
     
@@ -96,12 +93,8 @@ class Common(object):
             self.path,
             item
         )
-
         resp = rq.get(url, headers=headers)
-        data = json.loads(resp.content)
-        value = base64.b64decode(data[0]['Value'])
-
-        return value
+        return resp.content
 
     
     def _delete(self, headers, item):
@@ -115,6 +108,19 @@ class Common(object):
             self.path,
             item
         )
-
         resp = rq.delete(url, headers=headers)
+        return resp.content
+
+    def _post(self, headers, item, data):
+        """
+        Method to put info from the consul backend.
+        """
+
+        # Compose url to call
+        url = "{}/{}/{}".format(
+            self.host, 
+            self.path,
+            item
+        )
+        resp = rq.post(url, headers=headers, data=str(data))
         return resp.content

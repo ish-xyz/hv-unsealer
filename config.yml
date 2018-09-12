@@ -1,0 +1,4 @@
+consul:
+  path: /auto-unsealing
+  address: http://127.0.0.1:8500
+  acl-token: 'very-secret-token'
