@@ -21,6 +21,8 @@ class TestConsul(unittest.TestCase):
         }
     
     def test_vault_init(self):
+        #de-inizializzare
+        #inizializzare
         pass
 
     def tearDown(self):

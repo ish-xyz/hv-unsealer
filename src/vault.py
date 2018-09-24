@@ -33,8 +33,11 @@ class Vault(common.Common):
 
     def _del(self):
         pass
+    
+    def configLoad(self):
+        pass
 
-    def init(self):
+    def clusterInit(self):
         """
         Method used to initialize the Hashicorp vault setup.
         The function will just initialize the cluster only if it is needed.
