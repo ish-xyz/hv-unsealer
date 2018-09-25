@@ -4,7 +4,7 @@
 ### Author: Isham J. Araia @ None
 ### Date: 20 - 08 - 2018
 
-import modulesLoader
+import pathLoader
 import unittest
 import consul
 import baseTests
@@ -28,7 +28,7 @@ class TestConsul(unittest.TestCase):
         """
         Test: consul.Consul._get()
         """
-        self.assertEqual(self.get_test._get('get'), "{'get': 'true'}")
+        self.assertEqual(self.get_test._get('get'), '{"get": "true"}')
 
     def test_consul_put(self):
         """

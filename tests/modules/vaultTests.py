@@ -4,32 +4,59 @@
 ### Author: Isham J. Araia @ None
 ### Date: 20 - 08 - 2018
 
-import modulesLoader
+import pathLoader
 import unittest
+import vault
 import consul
 import baseTests
+import time
 
-class TestConsul(unittest.TestCase):
+class TestVault(unittest.TestCase):
 
     def setUp(self):
         """
         Setup the environment to test methods
         """
-        self.init_payload = { 
-            "secret_shares": 10,
-            "secret_threshold": 5
-        }
-    
+        #Load the general configuration and setup the vault connection
+        self.config = baseTests.BaseTests('config.yml').CONFIG['vaultTests']
+        self.vault = vault.Vault(
+                self.config['address'],
+                self.config['path']
+            )
+        #Setup the Vault Backend Connection
+        self.consul = consul.Consul(
+                self.config['consul'],
+                self.config['consul-path'],
+                self.config['consul-token']
+            )
+
     def test_vault_init(self):
-        #de-inizializzare
-        #inizializzare
-        pass
+        """
+        Test: vault.Vault.init()
+        """
+        keys, root_token = self.vault.init(self.config['payload'])
+
+        self.assertEqual(len(keys), self.config['payload']['secret_shares'])
+        self.assertEqual(len(root_token), 36)
+        self.consul._delete('vault/?recurse=true')
+        
+
+    def test_vault_unseal(self):
+        """
+        Test: vault.Vault.unseal()
+        """
+        keys, root_token = self.vault.init(self.config['payload'])
+        self.assertEqual(self.vault.unseal(keys), False)
+        self.consul._delete('vault/?recurse=true')
 
     def tearDown(self):
         """
         Teardown function.
         """
-        pass
+        #De-initialize the Vault cluster
+        #wait for the cluster setup
+        self.consul._delete('vault/?recurse=true')
+        
 
 if __name__ == '__main__':
     unittest.main()

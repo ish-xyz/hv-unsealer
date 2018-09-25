@@ -5,6 +5,7 @@
 import re
 import sys
 import requests as rq
+import json
 import logging as log
 
 class Base(object):
@@ -56,30 +57,22 @@ class Base(object):
         }
 
         date = '00-00-00'
-        stm = "{}: {} - {}".format(date, message, lvs[level])
+        stm = "{}: {} - {}".format(lvs[level], date, message)
+        return stm
 
-        return True
-
-    def _std_headers(self):
-        """
-        Standard http headers for consul
-        """
-        return {
-            'User-Agent': 'Vault Auto-Unsealing/0.0.1',
-        }
-
-    def _put(self, headers, item, data):
+    def _put(self, headers, item, data={}):
         """
         Method to put info from the consul backend.
         """
 
         # Compose url to call
-        url = "{}/{}/{}".format(
+        url = "{}{}/{}".format(
             self.host, 
             self.path,
             item
         )
-        resp = rq.put(url, headers=headers, data=str(data))
+
+        resp = rq.put(url, headers=headers, data=json.dumps(data))
         return resp.content
     
     def _get(self, headers, item):
@@ -88,39 +81,40 @@ class Base(object):
         """
 
         # Compose url to call
-        url = "{}/{}/{}".format(
+        url = "{}{}/{}".format(
             self.host, 
             self.path,
             item
         )
+
         resp = rq.get(url, headers=headers)
         return resp.content
 
     
-    def _delete(self, headers, item):
+    def _delete(self, headers, item, data={}):
         """
         Method to delete from the consul backend.
         """
 
         # Compose url to call
-        url = "{}/{}/{}".format(
+        url = "{}{}/{}".format(
             self.host, 
             self.path,
             item
         )
-        resp = rq.delete(url, headers=headers)
+        resp = rq.delete(url, headers=headers, data=json.dumps(data))
         return resp.content
 
-    def _post(self, headers, item, data):
+    def _post(self, headers, item, data={}):
         """
         Method to put info from the consul backend.
         """
 
         # Compose url to call
-        url = "{}/{}/{}".format(
+        url = "{}{}/{}".format(
             self.host, 
             self.path,
             item
         )
-        resp = rq.post(url, headers=headers, data=str(data))
+        resp = rq.post(url, headers=headers, data=json.dumps(data))
         return resp.content

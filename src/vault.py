@@ -2,53 +2,87 @@
 
 import requests as rq
 import json
-import sys
 import base64
-import common
+import base
 
-class Vault(common.Common):
+class Vault(base.Base):
     """ Module used to retrive the 
         token and init&unseal the vault endpoint.
     """
-    def __init__(self, endpoint, key, storage_type):
+    def __init__(self, host, path=''):
         """
         Class constructor
         Inputs:
             endpoint -> vault endpoint to unseal
-            key -> encryption key AES
-            storage -> distributed backend system
-
         """
-        self.endpoint = endpoint
-        self.key = key
-    
+        if not self._valid_url(host):
+            raise Exception(self.log('Not a valid URL', 4))
+
+        self.host = host
+        self.path = path
+
+    def _std_headers(self):
+        """
+        Standard http headers for vault
+        """
+        return {
+            'User-Agent': 'Vault Auto-Unsealing/0.0.1',
+            'Content-Type': 'application/json'
+        }
+
     def _get(self):
         pass
 
     def _put(self):
         pass
 
-    def _post(self):
+    def _post(self): 
         pass
 
-    def _del(self):
-        pass
-    
-    def configLoad(self):
+    def _delete(self):
         pass
 
-    def clusterInit(self):
+    def init(self, payload):
         """
-        Method used to initialize the Hashicorp vault setup.
-        The function will just initialize the cluster only if it is needed.
+        Method used to initialize the Hashicorp vault cluster.
+        The function will just initialize the cluster and only if it is needed.
+        Return: (keys -> array), (root_token -> string)
         """
-        # Check init status
-        # IF not initialized and you're the master 
-        # THEN init the cluster
-        pass
+        #Check if the cluster it's already initialized
+        #init and parse
+        if self.getInitStatus() != True:
+            resp = super(Vault, self)._put(self._std_headers(), 'sys/init', payload)
+            data = json.loads(resp)
 
-    def unseal(self, unsueal_keys=[], minkey=3) :
+            return data['keys'], data['root_token']
+        else:
+            print(self.log('The Vault cluter it has been already initialized.', 1))
+            return True, True
+
+
+    def getInitStatus(self):
+        """
+        Get the Vault cluster
+         initialization status
+        """
+        resp = super(Vault, self)._get(self._std_headers(), 'sys/init')
+        return json.loads(resp)['initialized']
+
+    def unseal(self, keys=[]) :
         """
         Method used only to unsueal the vault server.
         """
-        pass
+        for key in keys:
+            data = { "key": key }
+            resp = super(Vault, self)._put(self._std_headers(), 'sys/unseal', data)
+        
+        result = json.loads(resp)
+
+        try:
+            return result['sealed']
+        except:
+            raise Exception(
+                        self.log(
+                            "Error during the unseal. Details: {}".format(resp),
+                            4
+                        ))

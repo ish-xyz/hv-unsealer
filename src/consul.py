@@ -4,7 +4,6 @@
 ### Author: Isham J. Araia @ None
 ### Date: 20 - 08 - 2018
 
-import sys
 import base
 import json
 import base64
@@ -15,14 +14,12 @@ class Consul(base.Base):
         the backend connections and transactions.
     """
 
-    def __init__(self, host='http://localhost:8500', path='/', token='token'):
+    def __init__(self, host='http://localhost:8500', path='', token=False):
         """
         Constructor method
         """
-
         if not self._valid_url(host):
-            self.log('Not a valid URL', 4)
-            sys.exit(1)
+            raise Exception(self.log('Not a valid URL', 4))
 
         self.host = host
         self.token = token
@@ -56,11 +53,11 @@ class Consul(base.Base):
         return value
 
     
-    def _delete(self, item):
+    def _delete(self, item, data={}):
         """
         Method to delete from the consul backend.
         """
-        return super(Consul, self)._delete(self._std_headers(), item)
+        return super(Consul, self)._delete(self._std_headers(), item, data)
 
 
 if __name__ == '__main__':
