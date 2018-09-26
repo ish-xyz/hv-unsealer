@@ -1,4 +1,7 @@
+language: generic
 sudo: required
+os:
+  - linux
 
 services:
   - docker
@@ -8,6 +11,3 @@ before_install:
 
 script:
   - make testModule
-
-after_success:
-  - make cleanup

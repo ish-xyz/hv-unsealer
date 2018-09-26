@@ -22,5 +22,5 @@ cleanup:
 	docker network rm ${networkName}
 
 testModule:
-	docker exec -t vaultmod bash -c "cd /mnt/tests/modules && python consulTests.py"
-	docker exec -t vaultmod bash -c "cd /mnt/tests/modules && python vaultTests.py"
+	docker exec -t ${moduleName} bash -c "cd /mnt/tests/modules && python consulTests.py"
+	docker exec -t ${moduleName} bash -c "cd /mnt/tests/modules && python vaultTests.py"
