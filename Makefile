@@ -13,7 +13,7 @@ platformBuild: infraBuild
 	docker build -t ${backendImage} -f tests/platform/consul/Dockerfile.online tests/platform/consul/
 	docker run --network ${networkName} -td --name ${backendName} ${backendImage}
 	docker build -t ${moduleImage} -f tests/platform/vault/Dockerfile.online tests/platform/vault/
-	docker run --network ${networkName} -td --name ${moduleName} ${moduleImage}
+	docker run --network ${networkName} -td --cap-add IPC_LOCK --name ${moduleName} ${moduleImage}
 
 import:
 	docker cp . ${moduleName}:/mnt/
