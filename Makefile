@@ -22,5 +22,7 @@ cleanup:
 	docker network rm ${networkName}
 
 testModule:
+	docker logs ${moduleName}
+	docker logs ${backendName}
 	docker exec -t ${moduleName} bash -c "cd /mnt/tests/modules && python consulTests.py"
 	docker exec -t ${moduleName} bash -c "cd /mnt/tests/modules && python vaultTests.py"
