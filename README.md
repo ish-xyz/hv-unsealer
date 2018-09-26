@@ -1,12 +1,12 @@
 [![Build Status](https://travis-ci.org/ish-xyz/vault-unsealing.svg?branch=develop)](https://travis-ci.org/ish-xyz/vault-unsealing)
 
-Hashicorp Vault Auto Unsealing Library
+# Hashicorp Vault Auto Unsealing Library
 
 ===
 
-Note that this library it is currently under development and most of the feature described below are not working at the moment.
+## Note that this library it is currently under development and most of the feature described below are not working at the moment.
 
-Features:
+## Features:
 
 The library will have a monitor function to check the status of the Vault services around the hashicorp vault cluster.
 
