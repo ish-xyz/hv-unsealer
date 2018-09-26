@@ -1,11 +1,10 @@
-consul:
-  path: /auto-unsealing
-  address: http://127.0.0.1:8500
-  acl-token: 'very-secret-token'
-
 vault:
   init: true
-  backend-type: consul
-  backend: http://127.0.0.1:8500
-  backend-token: service-token
-  monitor: yes
+  auto-unsealing: true
+  path: '/v1'
+  address: http://127.0.0.1:8200
+
+consul:
+  address: http://127.0.0.1:8500
+  path: /auto-unsealing
+  acl-token: 'very-secret-token'

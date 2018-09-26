@@ -19,3 +19,5 @@ The library will perform the init-cluster operation.
 The library will be integrated with third party software for security, notification and so on.
 
 The first release it's written in Python 3.X.
+
+The software will be available as Python Package.
