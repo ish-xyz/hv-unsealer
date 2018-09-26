@@ -1,0 +1,11 @@
+FROM alpine:latest
+
+COPY config.json /tmp/consul/config.json
+COPY acl.json /tmp/consul/acl.json
+
+RUN apk add --update unzip curl && \
+    curl https://releases.hashicorp.com/consul/1.2.3/consul_1.2.3_linux_amd64.zip -o /tmp/consul.zip && \
+    unzip -d /usr/bin/ /tmp/consul.zip && \
+    chmod +x /usr/bin/consul
+
+CMD ["consul",  "agent",  "-config-dir=/tmp/consul"]

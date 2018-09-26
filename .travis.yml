@@ -1,0 +1,13 @@
+sudo: required
+
+services:
+  - docker
+
+before_install:
+  - make platformBuild
+
+script:
+  - make testModule
+
+after_success:
+  - make cleanup
