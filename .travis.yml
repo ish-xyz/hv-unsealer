@@ -12,4 +12,4 @@ before_install:
   - make import
 
 script:
-  - make testModule
+  - make testModulex

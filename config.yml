@@ -1,10 +1,11 @@
 vault:
   init: true
   auto-unsealing: true
+  init-payload: { "secret_shares": 5, "secret_threshold": 3 }
   path: '/v1'
   address: http://127.0.0.1:8200
 
 consul:
-  address: http://127.0.0.1:8500
-  path: /auto-unsealing
+  address: http://consulmod:8500
+  path: /v1/kv
   acl-token: 'very-secret-token'

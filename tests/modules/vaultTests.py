@@ -30,7 +30,7 @@ class TestVault(unittest.TestCase):
                 self.config['consul-token']
             )
 
-    def test_vault_init(self):
+    def test_init(self):
         """
         Test: vault.Vault.init()
         """
@@ -41,12 +41,27 @@ class TestVault(unittest.TestCase):
         self.consul._delete('vault/?recurse=true')
         
 
-    def test_vault_unseal(self):
+    def test_unseal(self):
         """
         Test: vault.Vault.unseal()
         """
         keys, root_token = self.vault.init(self.config['init-payload'])
         self.assertEqual(self.vault.unseal(keys), False)
+        self.consul._delete('vault/?recurse=true')
+
+    def test_getSealStatus(self):
+        """
+        Test: vault.Vault.getSealStatus()
+        """
+        keys, root_token = self.vault.init(self.config['init-payload'])
+
+        #Test the status call -> sealed
+        self.assertEqual(self.vault.getSealStatus(), True)
+        #Unseal operation
+        self.vault.unseal(keys)
+        #Test the status call -> unsealed
+        self.assertEqual(self.vault.getSealStatus(), False)
+        #De-initialize
         self.consul._delete('vault/?recurse=true')
 
     def tearDown(self):

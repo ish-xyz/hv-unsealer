@@ -68,6 +68,13 @@ class Vault(base.Base):
         resp = super(Vault, self)._get(self._std_headers(), 'sys/init')
         return json.loads(resp)['initialized']
 
+    def getSealStatus(self):
+        """
+        Get the cluster status (seal or unseal)
+        """
+        resp = super(Vault, self)._get(self._std_headers(), 'sys/seal-status')
+        return json.loads(resp)['sealed']
+
     def unseal(self, keys=[]) :
         """
         Method used only to unsueal the vault server.

@@ -50,23 +50,31 @@ class Main(base.Base):
         An infinite routine that will check \
             the vault status and perform operations such as unseal and init.
         """
-        pass
+        while True:
+        return
 
     def main(self):
         """
         Check if the cluster is initialized and start the control_loop.
         """
+        x = self.consul._delete('vault/?recurse=true')
 
-        if (self.vault.getInitStatus() == True and
+        if (self.vault.getInitStatus() != True and
                 self.CONFIG['vault']['init'] == True):
 
+            #Initialize the cluster
             print(self.log('Vault Cluster needs to be initialized.', 1)) 
-            keys, rtk = self.vault.init()
-            print(self.log('Retriving the root token and the shamir keys ...'))
-            print(keys, rtk)
+            keys, rtk = self.vault.init(self.CONFIG['vault']['init-payload'])
+            
+            #Starting the control loop
+            print(self.log('Retriving the root token and the shamir keys ...', 1))
+            self.control_loop()
+
         else:
+            #Starting the control loop
             print(self.log('Vault Cluster already initialized.', 1))
             print(self.log('Starting the infinite loop ...', 1))
+            self.control_loop()
 
 
 if __name__ == '__main__':
