@@ -11,9 +11,12 @@ infraBuild:
 
 platformBuild: infraBuild
 	docker build -t ${backendImage} -f tests/platform/consul/Dockerfile.online tests/platform/consul/
-	docker run --network ${networkName} -td -p 8500:8500 --name ${backendName} ${backendImage}
+	docker run --network ${networkName} -td --name ${backendName} ${backendImage}
 	docker build -t ${moduleImage} -f tests/platform/vault/Dockerfile.online tests/platform/vault/
-	docker run --network ${networkName} -v $$(pwd):/mnt -td -p 8125:8125 -p 8200:8200 --name ${moduleName} ${moduleImage}  
+	docker run --network ${networkName} -td --name ${moduleName} ${moduleImage}
+
+import:
+	docker cp . ${moduleName}:/mnt/
 
 cleanup:
 	docker rm -f ${backendName}
