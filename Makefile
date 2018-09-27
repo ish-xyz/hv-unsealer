@@ -11,7 +11,7 @@ infraBuild:
 
 platformBuild:
 	docker build -t ${backendImage} -f tests/platform/consul/Dockerfile.online tests/platform/consul/
-	docker run --network ${networkName} -td --name ${backendName} ${backendImage}
+	docker run --network ${networkName} -p 8500:8500 -td --name ${backendName} ${backendImage}
 	docker build -t ${moduleImage} -f tests/platform/vault/Dockerfile.online tests/platform/vault/
 	docker run --network ${networkName} -td --cap-add IPC_LOCK --name ${moduleName} ${moduleImage}
 

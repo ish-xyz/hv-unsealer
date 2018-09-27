@@ -7,6 +7,7 @@
 from Crypto.Cipher import AES
 import os
 import base
+import base64
 
 class Secrets(base.Base):
     """
@@ -25,10 +26,10 @@ class Secrets(base.Base):
         """
         In-transit encryption method
         """
-        AES.new(self.aes, AES.MODE_CFB, self.iv)
+
         try:
             instance = AES.new(self.aes, AES.MODE_CFB, self.iv)
-            return instance.encrypt(message)
+            return base64.b64encode(instance.encrypt(str(message)))
         except:
             err = 'Error during the in transit encryption.'
             raise Exception(self.log(err, 3))
@@ -38,9 +39,10 @@ class Secrets(base.Base):
         """
         In-transit decryption method
         """
+        message = base64.b64decode(message)
         try:
             instance = AES.new(self.aes, AES.MODE_CFB, self.iv)
-            return instance.decrypt(message)
+            return instance.decrypt(str(message))
         except:
             err = 'Error during the in transit decryption.'
             raise Exception(self.log(err), 3)

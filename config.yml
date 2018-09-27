@@ -18,5 +18,5 @@ secrets:
   iv: "6NgEl6fkjessx2d="
 
 #Only needed if your cluster it has been already initialized
-shamir_keys: {}
-root_token:
+shamir_keys: []
+root_token: ''

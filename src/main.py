@@ -24,9 +24,9 @@ class Main(base.Base):
         self.CONFIG = self._configLoad()
 
         self.vault = Vault(
-                self.CONFIG['vault']['address'],
-                self.CONFIG['vault']['path']
-                )
+            self.CONFIG['vault']['address'],
+            self.CONFIG['vault']['path']
+        )
 
         self.consul = Consul(
             self.CONFIG['consul']['address'],
@@ -37,7 +37,7 @@ class Main(base.Base):
         self.secrets = Secrets(
             self.CONFIG['secrets']['aes'],
             self.CONFIG['secrets']['iv']
-            )
+        )
 
     def _configLoad(self):
         """
@@ -52,6 +52,7 @@ class Main(base.Base):
         except KeyError:
             err = 'Use VAU_CONFIG to indicate the configuration file.'
             raise Exception(self.log(err, 4))
+
 
     def control_loop(self):
         """
@@ -71,18 +72,26 @@ class Main(base.Base):
                 print(self.log('Instance status: UNSEALED.', 1))
 
 
-    def _saveSecrets(self, data):
+    def _saveSecrets(self, data=dict):
         """
         Save encrypted secrets to the backend.
         """
-        print(data)
+        for item in data:
+            #Encrypt data and return a base64 conversion
+            enc = self.secrets.encrypt(data[item])
+            #Path where to push the data
+            path = "vau_secrets/{}".format(item)
+            print(self.log('Saving the secrets inside /{}'.format(path), 1))
+            #Push action
+            self.consul._put(path, enc)
 
 
     def main(self):
         """
-        Check if the cluster is initialized and start the control_loop.
+        Check if the cluster is \
+            initialized and start the control_loop.
         """
-
+        self.consul._delete('vault/?recurse=true')
         if (self.vault.getInitStatus() != True and
                 self.CONFIG['vault']['init'] == True):
 
@@ -92,7 +101,7 @@ class Main(base.Base):
             
             #Starting the control loop
             print(self.log('Storing the root token and the shamir keys ...', 1))
-            self._saveSecrets([keys, rt])
+            self._saveSecrets({'shamir_keys': keys, 'root_token': rtk})
 
             print(self.log('Cluster initialized. Starting the control_loop...', 1))
             self.control_loop()
@@ -106,8 +115,16 @@ class Main(base.Base):
             try:
                 self.consul._get('shamir_keys')
                 self.consul._get('root_token')
+
             except ValueError:
-                print('TODO-> Need to encrypt and store the secrets ...')
+
+                msg = 'Encrypt and save the secrets. '
+                msg += 'Then you MUST delete them from the config.yml.'
+                print(self.log(msg, 2))
+
+                keys = self.config['shamir_keys']
+                rtk = self.config['root_token']
+                self._saveSecrets({'shamir_keys': keys, 'root_token': rtk})
             except:
                 err = 'Error retriving the initialization keys'
                 raise Exception(self.log(err, 4))
