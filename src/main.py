@@ -10,6 +10,7 @@ import base
 import time
 from vault import Vault
 from consul import Consul
+from secretslib import Secrets
 
 class Main(base.Base):
     """
@@ -32,6 +33,11 @@ class Main(base.Base):
             self.CONFIG['consul']['path'],
             self.CONFIG['consul']['acl-token'],
         )
+
+        self.secrets = Secrets(
+            self.CONFIG['secrets']['aes'],
+            self.CONFIG['secrets']['iv']
+            )
 
     def _configLoad(self):
         """
@@ -65,6 +71,13 @@ class Main(base.Base):
                 print(self.log('Instance status: UNSEALED.', 1))
 
 
+    def _saveSecrets(self, data):
+        """
+        Save encrypted secrets to the backend.
+        """
+        print(data)
+
+
     def main(self):
         """
         Check if the cluster is initialized and start the control_loop.
@@ -79,15 +92,27 @@ class Main(base.Base):
             
             #Starting the control loop
             print(self.log('Storing the root token and the shamir keys ...', 1))
-            ## Store the keys
-            print(self.log('Cluster initialized. Starting the control_loop...', 1))
+            self._saveSecrets([keys, rt])
 
+            print(self.log('Cluster initialized. Starting the control_loop...', 1))
             self.control_loop()
 
         else:
-            #Starting the control loop
+            #Starting the infinite control loop
             print(self.log('Vault Cluster already initialized.', 1))
-            print(self.log('Starting the infinite loop ...', 1))
+
+            ## Try to get the old credentials if already stored \
+            ## in the backend or save them there if not.
+            try:
+                self.consul._get('shamir_keys')
+                self.consul._get('root_token')
+            except ValueError:
+                print('TODO-> Need to encrypt and store the secrets ...')
+            except:
+                err = 'Error retriving the initialization keys'
+                raise Exception(self.log(err, 4))
+
+            print(self.log('Starting the control_loop ...', 1))
             self.control_loop()
 
 

@@ -13,6 +13,10 @@ consul:
   path: /v1/kv
   acl-token: 'very-secret-token'
 
-encrypt:
-  aes: '?u?F?c	??z?i?m?'
-  iv: 'D%@:x??qp7?nE??'
+secrets:
+  aes: "4NHSl6fvvessx2d="
+  iv: "6NgEl6fkjessx2d="
+
+#Only needed if your cluster it has been already initialized
+shamir_keys: {}
+root_token:

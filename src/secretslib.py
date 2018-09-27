@@ -8,7 +8,7 @@ from Crypto.Cipher import AES
 import os
 import base
 
-class Secret(base.Base):
+class Secrets(base.Base):
     """
     This class is intended to handle 
         the in transit keys decryption and encryption.

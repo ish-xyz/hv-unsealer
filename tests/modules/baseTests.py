@@ -16,7 +16,6 @@ class TestBase(unittest.TestCase):
         Setup the environment to test methods
         """
         #Load the general configuration
-        #self.config = general.General('tests-config.yml').CONFIG['baseTests']
         self.base = base.Base()
 
 

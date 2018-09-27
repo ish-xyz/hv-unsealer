@@ -16,18 +16,18 @@ class TestSecretslib(unittest.TestCase):
         Setup the environment to test methods
         """
         config = general.General('tests-config.yml').CONFIG['secretslibTests']
-        self.sc = secretslib.Secret(config['aes'], config['iv'])
+        self.sc = secretslib.Secrets(config['aes'], config['iv'])
 
     def test_encrypt(self):
         """
-        Test: secretlib.Secret.encrypt()
+        Test: secretlib.Secrets.encrypt()
         """
         mykey = 'test-encryption'
         self.assertNotEqual(self.sc.encrypt(mykey), mykey)
 
     def test_decrypt(self):
         """
-        Test: secretlib.Secret.decrypt()
+        Test: secretlib.Secrets.decrypt()
         """
         mykey = 'test-encryption'
         ekey = self.sc.encrypt(mykey)
