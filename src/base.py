@@ -1,6 +1,8 @@
-## 
-#### Common methods
-#### August 2018 - Isham J. Araia
+#!/bin/env python3
+
+## Python 2.7.X -> 3.0.X
+## Base class: a common class to wrap all the shared method
+## Author: Isham J. Araia @ None
 
 import re
 import sys
@@ -34,7 +36,6 @@ class Base(object):
             return False
         else: 
             return True
-
 
     def log(self, message, level):
         """

@@ -1,8 +1,9 @@
-##
+#!/bin/env python3
+
 ## Python 2.7.X -> 3.0.X
-### Minimal Consul Backend API library
+### Consul class: Minimal Consul Backend API library
 ### Author: Isham J. Araia @ None
-### Date: 20 - 08 - 2018
+
 
 import base
 import json

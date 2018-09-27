@@ -1,7 +1,8 @@
 #!/bin/env python3
 
-##
-## Main class
+## Python 2.7.X -> 3.0.X
+## Main class: this class it is the orchestrator of the package.
+### Author: Isham J. Araia @ None
 
 import os
 import yaml

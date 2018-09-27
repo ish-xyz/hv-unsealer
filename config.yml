@@ -12,3 +12,7 @@ consul:
   address: http://consulmod:8500
   path: /v1/kv
   acl-token: 'very-secret-token'
+
+encrypt:
+  aes: '?u?F?c	??z?i?m?'
+  iv: 'D%@:x??qp7?nE??'

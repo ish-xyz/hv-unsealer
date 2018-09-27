@@ -1,5 +1,9 @@
 #!/bin/env python3
 
+## Python 2.7.X -> 3.0.X
+### Vault class: Minimal Hashicorp Vault API library.
+### Author: Isham J. Araia @ None
+
 import requests as rq
 import json
 import base64

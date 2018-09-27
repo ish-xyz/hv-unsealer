@@ -28,5 +28,6 @@ testModule:
 	docker exec -t ${moduleName} bash -c "cd /mnt/tests/modules && python consulTests.py"
 	docker exec -t ${moduleName} bash -c "cd /mnt/tests/modules && python vaultTests.py"
 	docker exec -t ${moduleName} bash -c "cd /mnt/tests/modules && python baseTests.py"
+	docker exec -t ${moduleName} bash -c "cd /mnt/tests/modules && python secretslibTests.py"
 
 localTest: infraBuild platformBuild import testModule

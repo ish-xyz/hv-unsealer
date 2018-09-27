@@ -33,7 +33,6 @@ class TestBase(unittest.TestCase):
         Test: base.Base.log()
         """
         self.assertEqual(type(self.base.log('Testing the log function', 1)), str)
-        
 
 if __name__ == '__main__':
     unittest.main()

@@ -10,3 +10,7 @@ vaultTests:
   consul: http://consulmod:8500
   consul-path: '/v1/kv'
   consul-token: 'very-secret-token'
+
+secretslibTests:
+  aes: "4NHSl6fvvessx2d="
+  iv: "6NgEl6fkjessx2d="
