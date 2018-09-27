@@ -6,6 +6,7 @@
 import os
 import yaml
 import base
+import time
 from vault import Vault
 from consul import Consul
 
@@ -51,13 +52,22 @@ class Main(base.Base):
             the vault status and perform operations such as unseal and init.
         """
         while True:
-        return
+            try:
+                time.sleep(self.CONFIG['timeout'])
+            except TypeError:
+                err = 'You must use an INT as "timeout:" param in the config.yml'
+                raise Exception(self.log(err, 3))
+
+            if self.vault.getSealStatus() == True:
+                print(self.log('Instance is sealed, proceed with the unsealing.', 2))
+            else:
+                print(self.log('Instance status: UNSEALED.', 1))
+
 
     def main(self):
         """
         Check if the cluster is initialized and start the control_loop.
         """
-        x = self.consul._delete('vault/?recurse=true')
 
         if (self.vault.getInitStatus() != True and
                 self.CONFIG['vault']['init'] == True):
@@ -67,7 +77,10 @@ class Main(base.Base):
             keys, rtk = self.vault.init(self.CONFIG['vault']['init-payload'])
             
             #Starting the control loop
-            print(self.log('Retriving the root token and the shamir keys ...', 1))
+            print(self.log('Storing the root token and the shamir keys ...', 1))
+            ## Store the keys
+            print(self.log('Cluster initialized. Starting the control_loop...', 1))
+
             self.control_loop()
 
         else:
