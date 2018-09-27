@@ -6,56 +6,33 @@
 
 import pathLoader
 import unittest
-import vault
-import consul
+import base
 import general
-import time
 
-class TestVault(unittest.TestCase):
+class TestBase(unittest.TestCase):
 
     def setUp(self):
         """
         Setup the environment to test methods
         """
-        #Load the general configuration and setup the vault connection
-        self.config = general.General('tests-config.yml').CONFIG['vaultTests']
-        self.vault = vault.Vault(
-                self.config['address'],
-                self.config['path']
-            )
-        #Setup the Vault Backend Connection
-        self.consul = consul.Consul(
-                self.config['consul'],
-                self.config['consul-path'],
-                self.config['consul-token']
-            )
+        #Load the general configuration
+        #self.config = general.General('tests-config.yml').CONFIG['baseTests']
+        self.base = base.Base()
 
-    def test_vault_init(self):
-        """
-        Test: vault.Vault.init()
-        """
-        keys, root_token = self.vault.init(self.config['init-payload'])
 
-        self.assertEqual(len(keys), self.config['init-payload']['secret_shares'])
-        self.assertEqual(len(root_token), 36)
-        self.consul._delete('vault/?recurse=true')
+    def test_valid_url(self):
+        """
+        Test: base.Base._valid_url()
+        """
+        self.assertEqual(self.base._valid_url('http://0.0.0.0/'), True)
+        self.assertEqual(self.base._valid_url('not-an-url'), False)
         
 
-    def test_vault_unseal(self):
+    def test_log(self):
         """
-        Test: vault.Vault.unseal()
+        Test: base.Base.log()
         """
-        keys, root_token = self.vault.init(self.config['init-payload'])
-        self.assertEqual(self.vault.unseal(keys), False)
-        self.consul._delete('vault/?recurse=true')
-
-    def tearDown(self):
-        """
-        Teardown function.
-        """
-        #De-initialize the Vault cluster
-        #wait for the cluster setup
-        self.consul._delete('vault/?recurse=true')
+        self.assertEqual(type(self.base.log('Testing the log function', 1)), str)
         
 
 if __name__ == '__main__':
