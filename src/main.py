@@ -103,7 +103,6 @@ class Main(base.Base):
         Check if the cluster is \
             initialized and start the control_loop.
         """
-        self.consul._delete('vault/?recurse=true')
         if (self.vault.getInitStatus() != True and
                 self.CONFIG['vault']['init'] == True):
 
@@ -134,8 +133,8 @@ class Main(base.Base):
                 msg += 'Then you MUST delete them from the config.yml.'
                 print(self.log(msg, 2))
 
-                keys = self.config['shamir_keys']
-                rtk = self.config['root_token']
+                keys = self.CONFIG['shamir_keys']
+                rtk = self.CONFIG['root_token']
                 self._saveSecrets({'shamir_keys': keys, 'root_token': rtk})
             except:
                 err = 'Error retriving the initialization keys'

@@ -9,6 +9,7 @@ import sys
 import requests as rq
 import json
 import logging as log
+import datetime
 
 class Base(object):
     """
@@ -57,7 +58,7 @@ class Base(object):
             4 : "CRITICAL"
         }
 
-        date = '00-00-00'
+        date = datetime.datetime.utcnow()
         stm = "{}: {} - {}".format(lvs[level], date, message)
         return stm
 
