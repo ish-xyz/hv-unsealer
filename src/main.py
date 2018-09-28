@@ -6,6 +6,7 @@
 
 import os
 import yaml
+import ast
 import base
 import time
 from vault import Vault
@@ -68,8 +69,19 @@ class Main(base.Base):
 
             if self.vault.getSealStatus() == True:
                 print(self.log('Instance is sealed, proceed with the unsealing.', 2))
+                shamir = ast.literal_eval(self._getSecret("shamir_keys"))
+                self.vault.unseal(shamir)
             else:
                 print(self.log('Instance status: UNSEALED.', 1))
+
+
+    def _getSecret(self, data=str):
+        """
+        Get decrypted secrets from the backend.
+        """
+        path = "vau_secrets/{}".format(data)
+        es = self.consul._get(path)
+        return self.secrets.decrypt(es)
 
 
     def _saveSecrets(self, data=dict):

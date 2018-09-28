@@ -34,18 +34,6 @@ class Vault(base.Base):
             'Content-Type': 'application/json'
         }
 
-    def _get(self):
-        pass
-
-    def _put(self):
-        pass
-
-    def _post(self): 
-        pass
-
-    def _delete(self):
-        pass
-
     def init(self, payload):
         """
         Method used to initialize the Hashicorp vault cluster.
@@ -79,7 +67,7 @@ class Vault(base.Base):
         resp = super(Vault, self)._get(self._std_headers(), 'sys/seal-status')
         return json.loads(resp)['sealed']
 
-    def unseal(self, keys=[]) :
+    def unseal(self, keys=[]):
         """
         Method used only to unsueal the vault server.
         """
