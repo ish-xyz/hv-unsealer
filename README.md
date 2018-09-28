@@ -10,7 +10,7 @@
 
 The library will have a monitor function to check the status of the Vault services around the hashicorp vault cluster.
 
-The library work only with a CONSUL + VAULT configuration and should be runnned on each vault instance as a daemon.
+The library work with CONSUL BACKEND instance and should be run on each vault instance as a daemon.
 
 The library will perform the auto-unsealing operation.
 
