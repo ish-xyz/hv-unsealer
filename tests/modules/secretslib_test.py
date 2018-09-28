@@ -7,7 +7,7 @@
 import pathLoader
 import unittest
 import secretslib
-import general
+import common
 
 class TestSecretslib(unittest.TestCase):
 
@@ -15,7 +15,7 @@ class TestSecretslib(unittest.TestCase):
         """
         Setup the environment to test methods
         """
-        config = general.General('tests-config.yml').CONFIG['secretslibTests']
+        config = common.Common('tests-config.yml').CONFIG['secretslibTests']
         self.sc = secretslib.Secrets(config['aes'], config['iv'])
 
     def test_encrypt(self):

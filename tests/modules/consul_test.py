@@ -7,7 +7,7 @@
 import pathLoader
 import unittest
 import consul
-import general
+import common
 
 class TestConsul(unittest.TestCase):
 
@@ -15,7 +15,7 @@ class TestConsul(unittest.TestCase):
         """
         Setup the environment to test methods
         """
-        config = general.General('tests-config.yml').CONFIG['consulTests']
+        config = common.Common('tests-config.yml').CONFIG['consulTests']
         self.get_test = consul.Consul(config['address'], config['path'], config['acl-token'])
         self.put_test = consul.Consul(config['address'], config['path'], config['acl-token'])
         self.del_test = consul.Consul(config['address'], config['path'], config['acl-token'])

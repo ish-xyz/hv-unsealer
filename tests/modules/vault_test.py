@@ -8,7 +8,7 @@ import pathLoader
 import unittest
 import vault
 import consul
-import general
+import common
 import time
 
 class TestVault(unittest.TestCase):
@@ -18,7 +18,7 @@ class TestVault(unittest.TestCase):
         Setup the environment to test methods
         """
         #Load the general configuration and setup the vault connection
-        self.config = general.General('tests-config.yml').CONFIG['vaultTests']
+        self.config = common.Common('tests-config.yml').CONFIG['vaultTests']
         self.vault = vault.Vault(
                 self.config['address'],
                 self.config['path']

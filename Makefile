@@ -25,9 +25,10 @@ cleanup:
 	docker network rm ${networkName}
 
 testModule:
-	docker exec -t ${moduleName} bash -c "cd /mnt/tests/modules && python consulTests.py"
-	docker exec -t ${moduleName} bash -c "cd /mnt/tests/modules && python vaultTests.py"
-	docker exec -t ${moduleName} bash -c "cd /mnt/tests/modules && python baseTests.py"
-	docker exec -t ${moduleName} bash -c "cd /mnt/tests/modules && python secretslibTests.py"
+	docker exec -t ${moduleName} bash -c "cd /mnt/tests/modules && python consul_test.py"
+	docker exec -t ${moduleName} bash -c "cd /mnt/tests/modules && python vault_test.py"
+	docker exec -t ${moduleName} bash -c "cd /mnt/tests/modules && python base_test.py"
+	docker exec -t ${moduleName} bash -c "cd /mnt/tests/modules && python secretslib_test.py"
+
 
 localTest: infraBuild platformBuild import testModule

@@ -6,7 +6,7 @@
 
 import yaml
 
-class General():
+class Common():
     """
     Base class contains basic and general modules.
     """

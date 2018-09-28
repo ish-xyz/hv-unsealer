@@ -7,7 +7,6 @@
 import pathLoader
 import unittest
 import base
-import general
 
 class TestBase(unittest.TestCase):
 
@@ -15,7 +14,7 @@ class TestBase(unittest.TestCase):
         """
         Setup the environment to test methods
         """
-        #Load the general configuration
+        #Load base module class
         self.base = base.Base()
 
 
