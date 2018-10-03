@@ -107,7 +107,7 @@ class Main(base.Base):
                 self.CONFIG['vault']['init'] == True):
 
             #Initialize the cluster
-            print(self.log('Vault Cluster needs to be initialized.', 1)) 
+            print(self.log('Vault Cluster needs to be initialized.', 1))
             keys, rtk = self.vault.init(self.CONFIG['vault']['init-payload'])
             
             #Starting the control loop
@@ -117,31 +117,41 @@ class Main(base.Base):
             print(self.log('Cluster initialized. Starting the control_loop...', 1))
             self.control_loop()
 
-        else:
-            #Starting the infinite control loop
-            print(self.log('Vault Cluster already initialized.', 1))
+        if (self.vault.getInitStatus() != True and
+                self.CONFIG['vault']['init'] == False):
 
-            ## Try to get the old credentials if already stored \
-            ## in the backend or save them there if not.
-            try:
-                self.consul._get('shamir_keys')
-                self.consul._get('root_token')
+                print(self.log('Another instance is initializing the cluster.', 1))
+                time.sleep(self.CONFIG['join_timeout'])
+                if self.vault.getInitStatus() != True:
+                    raise Exception(self.log('Error during the cluster init.', 4))
+                else:
+                    print(self.log('Another instance has initialize the cluster. Starting the control_loop.', 1))
+                    self.control_loop()
 
-            except ValueError:
+        #Starting the infinite control loop
+        print(self.log('Vault Cluster already initialized.', 1))
 
-                msg = 'Encrypt and save the secrets. '
-                msg += 'Then you MUST delete them from the config.yml.'
-                print(self.log(msg, 2))
+        ## Try to get the old credentials if already stored \
+        ## in the backend or save them there if not.
+        try:
+            self.consul._get('shamir_keys')
+            self.consul._get('root_token')
 
-                keys = self.CONFIG['shamir_keys']
-                rtk = self.CONFIG['root_token']
-                self._saveSecrets({'shamir_keys': keys, 'root_token': rtk})
-            except:
-                err = 'Error retriving the initialization keys'
-                raise Exception(self.log(err, 4))
+        except ValueError:
 
-            print(self.log('Starting the control_loop ...', 1))
-            self.control_loop()
+            msg = 'Encrypt and save the secrets. '
+            msg += 'Then you MUST delete them from the config.yml.'
+            print(self.log(msg, 2))
+
+            keys = self.CONFIG['shamir_keys']
+            rtk = self.CONFIG['root_token']
+            self._saveSecrets({'shamir_keys': keys, 'root_token': rtk})
+        except:
+            err = 'Error retriving the init keys&rtk'
+            raise Exception(self.log(err, 4))
+
+        print(self.log('Starting the control_loop ...', 1))
+        self.control_loop()
 
 
 if __name__ == '__main__':
