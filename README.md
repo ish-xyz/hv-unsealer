@@ -78,11 +78,11 @@ root_token: ''
 | join_timeout |it represent the time that each "non-init" instance should wait to join an initialized cluster. Represented in seconds. | true | 60 seconds |
 | timeout | the timeout used to poll the API and check the VAULT status for each vault instance. Represented in seconds. | true | 10 seconds |
 | log_file | Log file used to store the execution data and info. | false | none |
-| consul.adress | The backend address, the address should be and http or https endpoint and should contain the port. | true | none |
 | vault.init | ******** | ****** | true | none |
 | vault.init-payload | ******** | ****** | true | none |
 | vault.path | ******** | ****** | true | none |
 | vault.address | ******** | ****** | true | none |
+| consul.adress | The backend address, the address should be and http or https endpoint and should contain the port. | true | none |
 | consul.path | Consul store prefix, normally it is "v1/". | true | v1/ |
 | consul.acl-token | The token to communicate and authenticate on the Consul ACL. | true | none
 | secrets.aes | A 16-bit encryption key used from the AES lib to perform the in transit encryption and decryption | true | none |
