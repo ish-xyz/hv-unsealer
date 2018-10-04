@@ -113,6 +113,8 @@ class Main(base.Base):
             #Starting the control loop
             print(self.log('Storing the root token and the shamir keys ...', 1))
             self._saveSecrets({'shamir_keys': keys, 'root_token': rtk})
+            del keys
+            del rtk
 
             print(self.log('Cluster initialized. Starting the control_loop...', 1))
             self.control_loop()
@@ -146,6 +148,8 @@ class Main(base.Base):
             keys = self.CONFIG['shamir_keys']
             rtk = self.CONFIG['root_token']
             self._saveSecrets({'shamir_keys': keys, 'root_token': rtk})
+            del keys
+            del rtk
         except:
             err = 'Error retriving the init keys&rtk'
             raise Exception(self.log(err, 4))
