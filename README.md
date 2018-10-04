@@ -82,4 +82,5 @@ root_token: ''
 
 ### Missing points:
 **1 - SSL encryption between the application and the backend.**
+
 **2 - SSL encryption between the application and the vault instance.**
