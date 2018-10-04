@@ -75,6 +75,7 @@ root_token: ''
 
 ### Params:
 | **NAME** | **DESCRIPTION** | **REQUIRED** | **DEFAULT** |
+|---|---|---|---|
 | join_timeout |it represent the time that each "non-init" instance should wait to join an initialized cluster. Represented in seconds. | true | 60 seconds |
 | timeout | the timeout used to poll the API and check the VAULT status for each vault instance. Represented in seconds. | true | 10 seconds |
 | log_file | Log file used to store the execution data and info. | false | none |
