@@ -4,7 +4,7 @@
 
 ===
 
-## Note that this library it is currently under development and most of the feature described below are not working at the moment.
+## Note that this library it is currently under development and some of the features described below are not working at the moment.
 
 ## Features:
 
