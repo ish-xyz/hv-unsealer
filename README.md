@@ -78,10 +78,10 @@ root_token: ''
 | join_timeout |it represent the time that each "non-init" instance should wait to join an initialized cluster. Represented in seconds. | true | 60 seconds |
 | timeout | the timeout used to poll the API and check the VAULT status for each vault instance. Represented in seconds. | true | 10 seconds |
 | log_file | Log file used to store the execution data and info. | false | none |
-| vault.init | ******** | ****** | true | none |
-| vault.init-payload | ******** | ****** | true | none |
-| vault.path | ******** | ****** | true | none |
-| vault.address | ******** | ****** | true | none |
+| vault.init | param used to determine if the Vault instance should be initialized or not | none | false |
+| vault.init-payload | The payload used to initialize the cluster. see https://www.vaultproject.io/api/system/init.html | none | none |
+| vault.path | The Hashicorp Vault base path used to perform the REST api calls. | true | /v1 |
+| vault.address | The Hashicorp Vault instance address | true | none |
 | consul.adress | The backend address, the address should be and http or https endpoint and should contain the port. | true | none |
 | consul.path | Consul store prefix, normally it is "v1/". | true | v1/ |
 | consul.acl-token | The token to communicate and authenticate on the Consul ACL. | true | none
@@ -94,3 +94,5 @@ root_token: ''
 **1 - SSL encryption between the application and the backend.**
 
 **2 - SSL encryption between the application and the vault instance.**
+
+**3 - Hashicorp Vault token requests**
