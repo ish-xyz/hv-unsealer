@@ -1,0 +1,14 @@
+FROM centos:7
+
+COPY vault.hcl /etc/vault.hcl
+
+RUN yum install epel-release -y && \
+	yum install python2-pip nano unzip gcc python-devel -y && \
+	pip install requests pyYAML pycrypto && \
+	yum remove gcc python-devel -y
+
+RUN curl -o /tmp/vault.zip https://releases.hashicorp.com/vault/0.11.1/vault_0.11.1_linux_amd64.zip && \
+	unzip -d /usr/bin/ /tmp/vault.zip && \
+	chmod +x /usr/bin/vault
+
+CMD ["vault", "server", "-config=/etc/vault.hcl"]
