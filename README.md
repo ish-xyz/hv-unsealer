@@ -8,19 +8,24 @@
 
 ## Features:
 
-The library will have a monitor function to check the status of the Vault services around the hashicorp vault cluster.
+[DONE] - The library will have a monitor function to check the status of the Vault services around the hashicorp vault cluster.
 
-The library work with CONSUL BACKEND instance and should be run on each vault instance as a daemon.
+[DONE] - The library work with CONSUL BACKEND instance.
 
-The library will perform the auto-unsealing operation.
+The library will be available as side-car.
 
-The library will perform the init-cluster operation.
+The library should work with SSL and custom certificates.
 
-The library will be integrated with third party software for security, notification and so on.
+The library will be available as a official python package.
 
-The first release it's written in Python 3.X.
+[DONE] - The library will perform the auto-unsealing operation.
 
-The software will be available as Python Package.
+[DONE] - The library will perform the init-cluster operation.
+
+The library will be integrated with third party software for security, notification and so on. * TBD *
+
+[DONE] The first release it's written in Python 3.X.
+
 
 ## Installation
 
@@ -94,5 +99,3 @@ root_token: ''
 **1 - SSL encryption between the application and the backend.**
 
 **2 - SSL encryption between the application and the vault instance.**
-
-**3 - Hashicorp Vault token requests**
