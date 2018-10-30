@@ -24,11 +24,6 @@ class Main(base.Base):
         """
         self.CONFIG = self._configLoad()
 
-        self.vault = Vault(
-            self.CONFIG['vault']['address'],
-            self.CONFIG['vault']['path']
-        )
-
         self.consul = Consul(
             self.CONFIG['consul']['address'],
             self.CONFIG['consul']['path'],
@@ -98,17 +93,22 @@ class Main(base.Base):
             self.consul._put(path, enc)
 
 
-    def main(self):
+    def main(self, id):
         """
         Check if the cluster is \
             initialized and start the control_loop.
         """
+        self.vault = Vault(
+            self.CONFIG['vault'][id]['address'],
+            self.CONFIG['vault'][id]['path']
+        )
+
         if (self.vault.getInitStatus() != True and
-                self.CONFIG['vault']['init'] == True):
+                self.CONFIG['vault'][id]['init'] == True):
 
             #Initialize the cluster
             print(self.log('Vault Cluster needs to be initialized.', 1))
-            keys, rtk = self.vault.init(self.CONFIG['vault']['init-payload'])
+            keys, rtk = self.vault.init(self.CONFIG['vault'][id]['init-payload'])
             
             #Starting the control loop
             print(self.log('Storing the root token and the shamir keys ...', 1))
@@ -120,7 +120,7 @@ class Main(base.Base):
             self.control_loop()
 
         if (self.vault.getInitStatus() != True and
-                self.CONFIG['vault']['init'] == False):
+                self.CONFIG['vault'][id]['init'] == False):
 
                 print(self.log('Another instance is initializing the cluster.', 1))
                 time.sleep(self.CONFIG['join_timeout'])
@@ -160,6 +160,6 @@ class Main(base.Base):
 
 if __name__ == '__main__':
     vau = Main()
-    vau.main()
+    vau.main(0)
 else:
     raise Exception('Non importable module')
