@@ -59,7 +59,7 @@ class Base(object):
         }
 
         date = datetime.datetime.utcnow()
-        stm = "{}: {} - {}".format(lvs[level], date, message)
+        stm = "{} - {}: {} - {}".format(self.nodea, lvs[level], date, message)
         return stm
 
     def _put(self, headers, item, data={}):

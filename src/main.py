@@ -9,6 +9,7 @@ import yaml
 import ast
 import base
 import time
+import threading
 from vault import Vault
 from consul import Consul
 from secretslib import Secrets
@@ -92,12 +93,22 @@ class Main(base.Base):
             #Push action
             self.consul._put(path, enc)
 
+    def main(self):
+        """
+        Main function to trigger execution
+        """
+        confl = range(len(self.CONFIG['vault']))
+        for node in confl:
+            cotime = self.CONFIG['join_timeout'] + self.CONFIG['co_time']
+            threading.Thread(target=self.initializator, args=(node,)).start()
 
-    def main(self, id):
+
+    def initializator(self, id):
         """
         Check if the cluster is \
             initialized and start the control_loop.
         """
+        self.nodea = "{}{}".format("node-",id)
         self.vault = Vault(
             self.CONFIG['vault'][id]['address'],
             self.CONFIG['vault'][id]['path']
@@ -160,6 +171,6 @@ class Main(base.Base):
 
 if __name__ == '__main__':
     vau = Main()
-    vau.main(0)
+    vau.main()
 else:
     raise Exception('Non importable module')

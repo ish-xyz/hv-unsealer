@@ -1,15 +1,18 @@
 join_timeout: 10
+co_time: 10
 timeout: 10
 logfile: /tmp/vault.log
 
 vault:
   - init: true
+    name: 'node1'
     auto-unsealing: true
     init-payload: { "secret_shares": 5, "secret_threshold": 3 }
     path: '/v1'
     address: http://127.0.0.1:8200
 
   - init: false
+    name: 'node2'
     auto-unsealing: true
     init-payload: { "secret_shares": 5, "secret_threshold": 3 }
     path: '/v1'
