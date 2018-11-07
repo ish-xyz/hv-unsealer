@@ -4,12 +4,12 @@ consulTests:
   acl-token: 'very-secret-token'
 
 vaultTests:
-  init-payload: { "secret_shares": 5, "secret_threshold": 3 }
-  address: http://127.0.0.1:8200
-  path: /v1
-  consul: http://consulmod:8500
-  consul-path: '/v1/kv'
-  consul-token: 'very-secret-token'
+  - init-payload: { "secret_shares": 5, "secret_threshold": 3 }
+    address: http://127.0.0.1:8200
+    path: /v1
+    consul: http://consulmod:8500
+    consul-path: '/v1/kv'
+    consul-token: 'very-secret-token'
 
 secretslibTests:
   aes: "4NHSl6fvvessx2d="
