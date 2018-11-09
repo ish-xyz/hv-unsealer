@@ -20,8 +20,8 @@ class TestVault(unittest.TestCase):
         #Load the general configuration and setup the vault connection
         self.config = common.Common('tests-config.yml').CONFIG['vaultTests']
         self.vault = vault.Vault(
-                self.config['address'],
-                self.config['path']
+                self.config[0]['address'],
+                self.config[0]['path']
             )
         #Setup the Vault Backend Connection
         self.consul = consul.Consul(
