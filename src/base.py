@@ -16,7 +16,7 @@ class Base(object):
     Class used to wrap all the common methods
     """
     def __init__(self):
-        pass
+        self.nodea = 'nil'
 
     def _valid_url(self, host):
 

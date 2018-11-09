@@ -1,33 +1,20 @@
 [![Build Status](https://travis-ci.org/ish-xyz/vault-unsealing.svg?branch=develop)](https://travis-ci.org/ish-xyz/vault-unsealing)
 
-# Hashicorp Vault Auto Unsealing Library
+# Hashicorp Vault auto-unsealing with Consul Backend, no need of AWS, GCP, Azure etc...
 
 ===
 
-## Note that this library it is currently under development and some of the features described below are not working at the moment.
+## *** Note that this library it is currently under development. ***
 
-## Features:
+## The problem & solution.
 
-[DONE] - The library will have a monitor function to check the status of the Vault services around the hashicorp vault cluster.
+--
 
-[DONE] - The library work with CONSUL BACKEND instance.
+## How it works?
 
-The library will be available as side-car.
+--
 
-The library should work with SSL and custom certificates.
-
-The library will be available as a official python package.
-
-[DONE] - The library will perform the auto-unsealing operation.
-
-[DONE] - The library will perform the init-cluster operation.
-
-The library will be integrated with third party software for security, notification and so on. * TBD *
-
-[DONE] The first release it's written in Python 3.X.
-
-
-## Installation
+## Installation & Configuration.
 
 As long as the **Hashicorp Vault** API are reachable, you can build the container through the Dockerfile in the folder *build/* and run the auto-unsealing process as sidecar.
 
@@ -77,7 +64,7 @@ shamir_keys: []
 root_token: ''
 ```
 
-### Params:
+### Parameters:
 | **NAME** | **DESCRIPTION** | **REQUIRED** | **DEFAULT** |
 |---|---|---|---|
 | join_timeout |it represent the time that each "non-init" instance should wait to join an initialized cluster. Represented in seconds. | true | 60 seconds |

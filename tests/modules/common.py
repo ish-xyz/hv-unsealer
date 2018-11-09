@@ -16,6 +16,7 @@ class Common():
         Constructor method.
         Load general config
         """
+
         with open(config, 'r') as stream:
             try:
                 self.CONFIG = yaml.load(stream)
