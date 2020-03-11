@@ -1,3 +1,5 @@
+# [Discountinued as Hashicorp has integrated the auto-unseal on the open source version]
+
 [![Build Status](https://travis-ci.org/ish-xyz/vault-unsealing.svg?branch=develop)](https://travis-ci.org/ish-xyz/vault-unsealing)
 
 # Hashicorp Vault Auto Unsealing Library
